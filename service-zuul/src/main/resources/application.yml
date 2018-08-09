@@ -1,0 +1,24 @@
+# 将zuul 服务注册到8761 eureka 注册中心
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka/
+server:
+  port: 8765
+spring:
+  application:
+    name: service-zuul
+# 将 /api/a/** 的请求转发给 service-ribbon
+# 将 /api/b/** 的请求转发给 service-feign
+# 起到路由转发的功能
+zuul:
+  routes:
+    api-a:
+      path: /api/a/**
+      serviceId: service-ribbon
+    api-b:
+      path: /api/b/**
+      serviceId: service-feign
+    api-c:
+      path: /api/c/**
+      serviceId: service-ribbon2
